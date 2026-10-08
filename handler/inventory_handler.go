@@ -5,7 +5,6 @@ import (
 	"itemservice/dto"
 	"itemservice/model"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -132,7 +131,7 @@ func (ih *InventoryHandler) InventoryReserveHandler(c *gin.Context) {
 		// 7. Create the reservation item
 		reserve := model.ReservationItem{
 			UserID:    bodyRequest.UserID,
-			ItemID:    strconv.Itoa(int(items[0].ID)),
+			ItemID:    items[0].ID,
 			Quantity:  bodyRequest.Quantity,
 			ExpiresAt: time.Now().Add(getReservationExpiredDuration()),
 		}

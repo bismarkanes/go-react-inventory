@@ -24,7 +24,7 @@ type ReserveItemResponse struct {
 func (rir *ReserveItemResponse) MapFromModel(reserveItem model.ReservationItem) {
 	rir.Status = "success"
 	rir.ReservationID = strconv.Itoa(int(reserveItem.ID))
-	rir.ItemID = reserveItem.ItemID
+	rir.ItemID = strconv.Itoa(int(reserveItem.ItemID))
 	rir.UserID = reserveItem.UserID
 	rir.Quantity = reserveItem.Quantity
 	rir.ExpiresAt = reserveItem.ExpiresAt
