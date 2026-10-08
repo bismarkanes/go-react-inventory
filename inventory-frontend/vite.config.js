@@ -8,4 +8,12 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  server: {
+    host: true, // or '0.0.0.0'
+    port: 5173, // or your chosen port
+    strictPort: true,
+    hmr: {
+      clientPort: 5173, // Ensure HMR uses the exposed host port
+    },
+  }
 })

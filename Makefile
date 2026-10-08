@@ -1,4 +1,4 @@
-.PHONY: build run air test
+.PHONY: build run air test compose
 
 build:
 	go build -o app main.go
@@ -11,3 +11,6 @@ air:
 
 test:
 	go test ./...
+
+compose:
+	docker compose up -d --build

@@ -20,6 +20,8 @@ services:
 
   item-service:
     image: ${DOCKER_IMAGE:-item-service}
+    depends_on:
+      - postgresdb
     build: .
     ports:
       - 8080:8080
