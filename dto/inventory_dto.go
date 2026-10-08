@@ -8,7 +8,7 @@ import (
 
 type ReserveItemRequest struct {
 	UserID   string `json:"user_id" binding:"required"`
-	ItemID   string `json:"item_id" binding:"required"`
+	ItemID   string `json:"item_id" binding:"required,numeric"`
 	Quantity int    `json:"quantity" binding:"required"`
 }
 
@@ -31,7 +31,7 @@ func (rir *ReserveItemResponse) MapFromModel(reserveItem model.ReservationItem) 
 }
 
 type ReserveConfirmItemRequest struct {
-	ReservationID string `json:"reservation_id" binding:"required"`
+	ReservationID string `json:"reservation_id" binding:"required,numeric"`
 }
 
 type ReserveConfirmItemResponse struct {
