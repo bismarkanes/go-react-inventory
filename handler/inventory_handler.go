@@ -66,8 +66,31 @@ func (ih *InventoryHandler) InventoryReserveHandler(c *gin.Context) {
 		return
 	}
 
-	// 4. If no reservation, create the reservation
+	// 4. If no reservation found
 	if len(reservations) == 0 {
+		// 5. Validate the item's stock
+		var items []model.Item
+
+		if result := ih.Db.
+			Where("id = ?", bodyRequest.ItemID).
+			Find(&items).Limit(1); result.Error != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status": "failed",
+				"error":  result.Error.Error(),
+			})
+			return
+		}
+
+		item := items[0]
+		if bodyRequest.Quantity > item.Stock {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status": "failed",
+				"error":  fmt.Sprintf("Item stock %d < reserve quantity %d", item.Stock, bodyRequest.Quantity),
+			})
+			return
+		}
+
+		// 6. Create the reservation item
 		reserve := model.ReservationItem{
 			UserID:    bodyRequest.UserID,
 			ItemID:    strconv.Itoa(int(items[0].ID)),
@@ -75,8 +98,7 @@ func (ih *InventoryHandler) InventoryReserveHandler(c *gin.Context) {
 			ExpiresAt: time.Now().Add(getReservationExpiredDuration()),
 		}
 
-		result := ih.Db.Create(&reserve)
-		if result.Error != nil {
+		if result := ih.Db.Create(&reserve); result.Error != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"status": "failed",
 				"error":  result.Error.Error(),
@@ -87,9 +109,10 @@ func (ih *InventoryHandler) InventoryReserveHandler(c *gin.Context) {
 		reservations = append(reservations, reserve)
 	}
 
-	// 5. send the reservation response
+	// 7. send the reservation response
 	response := dto.ReserveItemResponse{}
 	response.MapFromModel(reservations[0])
+
 	c.JSON(http.StatusOK, response)
 }
 
