@@ -4,7 +4,7 @@ package main
 import (
 	"fmt"
 	"itemservice/handler"
-	"itemservice/model"
+	customtools "itemservice/tools"
 	"log"
 
 	"github.com/gin-contrib/cors"
@@ -29,7 +29,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
-	db.AutoMigrate(&model.Item{}, &model.ReservationItem{})
+	customtools.InitialMigration(db)
 
 	inventoryHandler := handler.CreateInventoryHandler(db)
 
