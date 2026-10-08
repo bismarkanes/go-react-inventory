@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Navigation from "../component/navigation"
 import Header from "../component/header"
+import { BASE_API_URL } from "../utils/constant"
 
 function Home() {
   const [inventoryStatus, setInventoryStatus] = useState({
@@ -18,7 +19,7 @@ function Home() {
     async function fetchUsers(itemId) {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/api/v1/inventory/stock?item_id=${itemId}`);
+        const response = await fetch(`${BASE_API_URL}/api/v1/inventory/stock?item_id=${itemId}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
