@@ -1,0 +1,22 @@
+app
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+coverage.*
+
+# Dependency directories
+# Uncomment the line below if you want to check in your vendor folder
+# vendor/
+
+# Main application binary (if you name your compiled output 'main')
+# main
+tmp

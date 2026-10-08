@@ -1,0 +1,19 @@
+:HOST=http://localhost:8080/api/v1
+###
+POST :HOST/inventory/reserve
+content-type: application/json
+
+{
+	"user_id": "usr_9981",
+  "item_id": "item_4021",
+  "quantity": 2
+}
+###
+POST :HOST/inventory/confirm
+content-type: application/json
+
+{
+	"reservation_id": "usr_9981"
+}
+###
+GET :HOST/inventory/stock?item_id=item_4021
