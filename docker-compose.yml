@@ -32,5 +32,19 @@ services:
     stdin_open: true
     tty: true
 
+  frontend:
+    image: ${DOCKER_IMAGE:-frontend}
+    build: ./inventory-frontend
+    ports:
+      - 5173:5173
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+    stdin_open: true
+    tty: true
+
 volumes:
   pgdata:
