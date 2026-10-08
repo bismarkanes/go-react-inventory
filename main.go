@@ -15,7 +15,7 @@ import (
 
 // database configuration
 var (
-	dbHost     = "postgresdb"
+	dbHost     = "localhost"
 	dbUser     = "bismark"
 	dbPassword = "l%wTQkfWv?2_"
 	dbName     = "itemservice"
@@ -37,6 +37,7 @@ func main() {
 	router.Use(cors.Default())
 
 	v1 := router.Group("/api/v1")
+	v1.GET("/inventory/active", inventoryHandler.InventoryReserveActiveHandler)
 	v1.POST("/inventory/reserve", inventoryHandler.InventoryReserveHandler)
 	v1.POST("/inventory/confirm", inventoryHandler.InventoryConfirmHandler)
 	v1.GET("/inventory/stock", inventoryHandler.InventoryStatusHandler)

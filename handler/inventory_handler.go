@@ -26,6 +26,35 @@ func getReservationExpiredDuration() time.Duration {
 	return time.Minute * time.Duration(5)
 }
 
+func (ih *InventoryHandler) InventoryReserveActiveHandler(c *gin.Context) {
+	itemId := c.Query("item_id")
+	reservations := []model.ReservationItem{}
+
+	if result := ih.Db.
+		Where("item_id = ?", itemId).
+		Where("confirmed <> ?", true).
+		Where("expires_at > ?", time.Now()).Find(&reservations); result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status": "failed",
+			"error":  result.Error.Error(),
+		})
+		return
+	}
+
+	if len(reservations) == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"status": "failed",
+			"error":  "No reservation found",
+		})
+		return
+	}
+
+	response := dto.ReserveItemResponse{}
+	response.MapFromModel(reservations[0])
+
+	c.JSON(http.StatusOK, response)
+}
+
 func (ih *InventoryHandler) InventoryReserveHandler(c *gin.Context) {
 	bodyRequest := dto.ReserveItemRequest{}
 
