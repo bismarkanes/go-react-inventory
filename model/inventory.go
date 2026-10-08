@@ -11,7 +11,8 @@ type Item struct {
 type ReservationItem struct {
 	ID        uint
 	UserID    string
-	ItemID    string
+	ItemID    uint
+	Item      Item
 	Quantity  int
 	ExpiresAt time.Time
 	Confirmed bool `gorm:"default:false"`
