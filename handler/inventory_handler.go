@@ -131,6 +131,7 @@ func (ih *InventoryHandler) InventoryConfirmHandler(c *gin.Context) {
 	var reservations []model.ReservationItem
 	result := ih.Db.
 		Where("id = ?", bodyRequest.ReservationID).
+		Where("confirmed <> ?", true).
 		Where("expires_at > ?", time.Now()).Find(&reservations).Limit(1)
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
