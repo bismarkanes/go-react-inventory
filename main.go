@@ -14,7 +14,7 @@ import (
 
 // database configuration
 var (
-	dbHost     = "localhost"
+	dbHost     = "postgresdb"
 	dbUser     = "bismark"
 	dbPassword = "l%wTQkfWv?2_"
 	dbName     = "itemservice"
