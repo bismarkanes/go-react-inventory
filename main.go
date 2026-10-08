@@ -7,6 +7,7 @@ import (
 	"itemservice/model"
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -33,6 +34,7 @@ func main() {
 	inventoryHandler := handler.CreateInventoryHandler(db)
 
 	router := gin.Default()
+	router.Use(cors.Default())
 
 	v1 := router.Group("/api/v1")
 	v1.POST("/inventory/reserve", inventoryHandler.InventoryReserveHandler)

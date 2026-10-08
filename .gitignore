@@ -20,3 +20,4 @@ coverage.*
 # Main application binary (if you name your compiled output 'main')
 # main
 tmp
+inventory-frontend/node_modules
