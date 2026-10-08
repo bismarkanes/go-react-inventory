@@ -1,7 +1,7 @@
 # How to run
 
 ```
-docker compose up
+docker compose up -d --build
 ```
 
 Open in web browser :
