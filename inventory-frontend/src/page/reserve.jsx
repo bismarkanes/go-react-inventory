@@ -140,21 +140,52 @@ function Reserve() {
       <Header />
       <Navigation />
       <div className='card'>
-        <p className='has-text-weight-bold'>Current Reservation</p>
+        <div className='card-header'>
+          <p className='card-header-title has-text-weight-bold'>Current Reservation</p>
+        </div>
         { reserve.status == "success" ?
           <>
-            <p>Active Reserve ID is {reserve.reservation_id}</p>
-            <p>Quantity is {reserve.quantity}</p>
-            <p>Please hit button to confirm</p>
-            <button onClick={confirmReserveButtonClick} className='button'>Confirm</button>
+          <div className='card-content'>
+            <div className='field'>
+              <p>Active Reserve ID is {reserve.reservation_id}</p>
+            </div>
+            <div className='field'>
+              <p>Quantity is {reserve.quantity}</p>
+            </div>
+            <div className='field'>
+              <p>User ID is {reserve.user_id}</p>
+            </div>
+            <div className='field'>
+              <p>Please hit button to confirm</p>
+            </div>
+            <div className='field'>
+              <button onClick={confirmReserveButtonClick} className='button'>Confirm</button>
+            </div>
+          </div>
           </> : null }
       </div>
 
       <div className='card'>
-        <p className='has-text-weight-bold'>Create Quantity Reservation</p>
-        <input className='input' type='text' placeholder='Enter User Id' value={inputUserId} onChange={handleInputUserIdChange} />
-        <input className='input' type='number' placeholder='Enter quantity' value={inputQuantity} onChange={handleInputQuantityChange}/>
-        <button onClick={createReserveButtonClick} className='button'>Create</button>
+        <div className='card-header'>
+          <p className='card-header-title has-text-weight-bold'>Create Quantity Reservation</p>
+        </div>
+        <div className='card-content'>
+          <div className='field'>
+            <div className='control'>
+              <input className='input' type='text' placeholder='Enter User Id' value={inputUserId} onChange={handleInputUserIdChange} />
+            </div>
+          </div>
+          <div className='field'>
+            <div className='control'>
+              <input className='input' type='number' placeholder='Enter quantity' value={inputQuantity} onChange={handleInputQuantityChange}/>
+            </div>
+          </div>
+          <div className='field'>
+            <div className='control'>
+              <button onClick={createReserveButtonClick} className='button'>Create</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
