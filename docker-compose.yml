@@ -1,0 +1,36 @@
+services:
+  postgresdb:
+    image: postgres:15.19-trixie
+    restart: always
+    environment:
+      POSTGRES_USER: bismark
+      POSTGRES_PASSWORD: l%wTQkfWv?2_
+      POSTGRES_DB: itemservice
+    ports:
+      - 5432:5432
+    networks:
+      - default
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  item-service:
+    image: ${DOCKER_IMAGE:-item-service}
+    build: .
+    ports:
+      - 8080:8080
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+    stdin_open: true
+    tty: true
+
+volumes:
+  pgdata:
